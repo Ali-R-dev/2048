@@ -19,7 +19,7 @@ export const theme = {
     },
   },
   sizes: {
-    tileSize: '106.25px',
+    tileSize: '100px',
     gap: '15px',
     mobileTileSize: '60px',
     mobileGap: '10px',

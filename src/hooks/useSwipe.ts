@@ -24,7 +24,7 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
       const touch = e.changedTouches[0];
       const deltaX = touch.clientX - touchStart.x;
       const deltaY = touch.clientY - touchStart.y;
-      const minSwipeDistance = 50;
+      const minSwipeDistance = 30; // Reduced minimum swipe distance for better response
 
       if (Math.abs(deltaX) < minSwipeDistance && Math.abs(deltaY) < minSwipeDistance) {
         return;
@@ -39,17 +39,17 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
       setTouchStart(null);
     };
 
-    const grid = document.getElementById('grid');
-    if (!grid) return;
+    const board = document.getElementById('board-container');
+    if (!board) return;
 
-    grid.addEventListener('touchstart', handleTouchStart);
-    grid.addEventListener('touchmove', handleTouchMove, { passive: false });
-    grid.addEventListener('touchend', handleTouchEnd);
+    board.addEventListener('touchstart', handleTouchStart, { passive: true });
+    board.addEventListener('touchmove', handleTouchMove, { passive: false });
+    board.addEventListener('touchend', handleTouchEnd, { passive: true });
 
     return () => {
-      grid.removeEventListener('touchstart', handleTouchStart);
-      grid.removeEventListener('touchmove', handleTouchMove);
-      grid.removeEventListener('touchend', handleTouchEnd);
+      board.removeEventListener('touchstart', handleTouchStart);
+      board.removeEventListener('touchmove', handleTouchMove);
+      board.removeEventListener('touchend', handleTouchEnd);
     };
   }, [onSwipe, touchStart]);
 

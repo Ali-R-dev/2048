@@ -39,7 +39,7 @@ export const Board: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <BoardContainer {...swipeHandlers}>
+    <BoardContainer id="board-container" {...swipeHandlers}>
       <Grid id="grid">
         {Array(16).fill(null).map((_, index) => (
           <Cell key={index} />

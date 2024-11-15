@@ -1,4 +1,3 @@
-
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import { store } from './store/store';
@@ -8,33 +7,32 @@ import { Score } from './components/Score/Score';
 import { GlobalStyle } from './styles/GlobalStyle';
 import styled from 'styled-components';
 
-const Container = styled.div`
-  text-align: center;
+const AppWrapper = styled.div`
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: ${({ theme }) => theme.colors.background};
   padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
+  box-sizing: border-box;
+`;
+
+const GameContainer = styled.div`
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 `;
 
 const Title = styled.h1`
   color: ${({ theme }) => theme.colors.darkText};
-  font-size: 80px;
-  margin: 0 0 20px;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 40px;
-    margin: 0 0 15px;
-  }
-`;
-
-const Instructions = styled.p`
-  margin-top: 20px;
-  font-size: 16px;
-  color: ${({ theme }) => theme.colors.darkText};
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 14px;
-    margin-top: 15px;
-  }
+  font-size: clamp(40px, 10vw, 80px);
+  margin: 0;
+  text-align: center;
 `;
 
 function App() {
@@ -42,14 +40,13 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <Container>
-          <Title>2048</Title>
-          <Score />
-          <Board />
-          <Instructions>
-            Use arrow keys or swipe to move tiles. Combine matching numbers to score points!
-          </Instructions>
-        </Container>
+        <AppWrapper>
+          <GameContainer>
+            <Title>2048</Title>
+            <Score />
+            <Board />
+          </GameContainer>
+        </AppWrapper>
       </ThemeProvider>
     </Provider>
   );

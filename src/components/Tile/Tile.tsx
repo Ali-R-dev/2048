@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { TileContainer } from './Tile.styles';
 import { Tile as TileType } from '../../utils/gameLogic';
 import { MOVEMENT_SPRING, MERGE_SPRING, NEW_TILE_SPRING } from '../../constants/animation';
+import { useTheme } from 'styled-components';
 
 interface TileProps {
   tile: TileType;
@@ -10,6 +11,7 @@ interface TileProps {
 export const Tile: React.FC<TileProps> = ({ tile }) => {
   const { value, position, mergedFrom } = tile;
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 520);
+  const theme = useTheme();
   
   useEffect(() => {
     const handleResize = () => {
@@ -20,8 +22,12 @@ export const Tile: React.FC<TileProps> = ({ tile }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const tileSize = isMobile ? 60 : 106.25;
-  const gap = isMobile ? 10 : 15;
+  const tileSize = isMobile 
+    ? parseInt(theme.sizes.mobileTileSize) 
+    : parseInt(theme.sizes.tileSize);
+  const gap = isMobile 
+    ? parseInt(theme.sizes.mobileGap) 
+    : parseInt(theme.sizes.gap);
 
   // Calculate position relative to the grid
   const x = position.col * (tileSize + gap);

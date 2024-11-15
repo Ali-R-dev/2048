@@ -2,40 +2,28 @@ import styled from 'styled-components';
 
 export const ScoreWrapper = styled.div`
   display: flex;
-  gap: 20px;
+  gap: clamp(10px, 3vw, 20px);
   justify-content: center;
-  margin-bottom: 20px;
+  width: 100%;
 `;
 
 export const ScoreContainer = styled.div`
   background: ${({ theme }) => theme.colors.gameBackground};
-  padding: 15px 25px;
+  padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 25px);
   border-radius: 3px;
   color: ${({ theme }) => theme.colors.lightText};
-  min-width: 100px;
+  min-width: clamp(80px, 20vw, 100px);
   text-align: center;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    padding: 10px 15px;
-    min-width: 80px;
-  }
 `;
 
 export const ScoreLabel = styled.div`
   text-transform: uppercase;
-  font-size: 13px;
-  margin-bottom: 5px;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 11px;
-  }
+  font-size: clamp(11px, 2.5vw, 13px);
+  margin-bottom: clamp(3px, 1vw, 5px);
+  font-weight: 500;
 `;
 
 export const ScoreValue = styled.div`
-  font-size: 25px;
+  font-size: clamp(20px, 5vw, 25px);
   font-weight: bold;
-
-  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 20px;
-  }
 `;
