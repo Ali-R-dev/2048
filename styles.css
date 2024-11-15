@@ -49,6 +49,7 @@ h1 {
     height: 500px;
     padding: 15px;
     position: relative;
+    box-sizing: border-box;
 }
 
 .grid-cell {
@@ -57,7 +58,8 @@ h1 {
     position: absolute;
     width: 106.25px;
     height: 106.25px;
-    margin: 15px;
+    margin: 7.5px;
+    box-sizing: border-box;
 }
 
 .tile {
@@ -66,12 +68,14 @@ h1 {
     position: absolute;
     width: 106.25px;
     height: 106.25px;
+    margin: 7.5px;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: bold;
     transition: transform 0.15s ease-in-out, opacity 0.15s ease-in-out;
     z-index: 1;
+    box-sizing: border-box;
 }
 
 .tile-2 { background-color: #eee4da; color: #776e65; font-size: 40px; }
@@ -90,4 +94,57 @@ h1 {
     margin-top: 20px;
     color: #776e65;
     font-size: 16px;
+}
+
+@media (max-width: 520px) {
+    .game-container {
+        width: 280px;
+        height: 280px;
+        padding: 10px;
+    }
+
+    .grid-cell {
+        width: 60px;
+        height: 60px;
+        margin: 5px;
+    }
+
+    .tile {
+        width: 60px;
+        height: 60px;
+        margin: 5px;
+        font-size: 25px;
+    }
+
+    .tile-128, .tile-256, .tile-512 {
+        font-size: 22px;
+    }
+
+    .tile-1024, .tile-2048 {
+        font-size: 18px;
+    }
+
+    h1 {
+        font-size: 40px;
+    }
+
+    .score-container {
+        padding: 5px 10px;
+    }
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    touch-action: none;
+}
+
+@media (max-width: 520px) {
+    .grid-cell, .tile {
+        transform: translate(calc(var(--x, 0) * 65px), calc(var(--y, 0) * 65px)) scale(var(--scale, 1));
+    }
 }

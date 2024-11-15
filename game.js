@@ -36,7 +36,8 @@ class Game2048 {
     }
 
     getTransform(row, col) {
-        return `translate(${col * 121.25}px, ${row * 121.25}px)`;
+        const spacing = window.innerWidth <= 520 ? 70 : 121.25;
+        return `translate(${col * spacing}px, ${row * spacing}px)`;
     }
 
     createTileElement(value, row, col) {
@@ -162,6 +163,11 @@ class Game2048 {
             document.getElementById('score').textContent = this.score;
             await new Promise(resolve => setTimeout(resolve, 100));
             this.addRandomTile();
+            // Wait for the new tile animation to complete
+            await new Promise(resolve => setTimeout(resolve, 150));
+            this.checkGameStatus();
+        } else {
+            // If no move was made, still check if game is over
             this.checkGameStatus();
         }
         
@@ -171,7 +177,9 @@ class Game2048 {
     checkGameStatus() {
         // Check for 2048 win condition
         if (this.grid.some(row => row.some(cell => cell === 2048))) {
-            alert('Congratulations! You won!');
+            setTimeout(() => {
+                alert('Congratulations! You won!');
+            }, 50);
             return;
         }
 
@@ -190,17 +198,59 @@ class Game2048 {
         );
 
         if (!hasEmptyCell && !hasMergeableTiles) {
-            alert('Game Over! No more moves possible.');
+            // Delay game over message to show the last move
+            setTimeout(() => {
+                alert('Game Over! No more moves possible.');
+            }, 50);
         }
     }
 
     setupEventListeners() {
+        // Keyboard controls
         document.addEventListener('keydown', (event) => {
             if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) {
                 event.preventDefault();
                 this.move(event.key);
             }
         });
+
+        // Touch controls
+        let touchStartX = 0;
+        let touchStartY = 0;
+        const gridElement = document.getElementById('grid');
+
+        gridElement.addEventListener('touchstart', (event) => {
+            event.preventDefault();
+            touchStartX = event.touches[0].clientX;
+            touchStartY = event.touches[0].clientY;
+        }, { passive: false });
+
+        gridElement.addEventListener('touchmove', (event) => {
+            event.preventDefault();
+        }, { passive: false });
+
+        gridElement.addEventListener('touchend', (event) => {
+            event.preventDefault();
+            const touchEndX = event.changedTouches[0].clientX;
+            const touchEndY = event.changedTouches[0].clientY;
+
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            const minSwipeDistance = 50; // Minimum swipe distance in pixels
+
+            if (Math.abs(deltaX) < minSwipeDistance && Math.abs(deltaY) < minSwipeDistance) {
+                return; // Ignore short swipes
+            }
+
+            // Determine swipe direction based on the larger delta
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                // Horizontal swipe
+                this.move(deltaX > 0 ? 'ArrowRight' : 'ArrowLeft');
+            } else {
+                // Vertical swipe
+                this.move(deltaY > 0 ? 'ArrowDown' : 'ArrowUp');
+            }
+        }, { passive: false });
     }
 }
 
