@@ -4,7 +4,7 @@ export interface Position {
 }
 
 export interface Tile {
-  id: number;
+  id: string;
   value: number;
   position: Position;
   mergedFrom?: Tile[];
@@ -13,17 +13,14 @@ export interface Tile {
 export class GameManager {
   private grid: number[][];
   private score: number;
-  private tiles: Map<number, Tile>;
-  private tileIdCounter: number;
+  private tiles: Map<string, Tile>;
   private size: number;
 
   constructor(size: number = 4) {
     this.size = size;
-    this.grid = [];
+    this.grid = Array(size).fill(null).map(() => Array(size).fill(0));
     this.score = 0;
     this.tiles = new Map();
-    this.tileIdCounter = 0;
-    this.initializeGrid();
   }
 
   private initializeGrid(): void {
@@ -45,7 +42,7 @@ export class GameManager {
       this.grid[row][col] = value;
       
       const newTile: Tile = {
-        id: this.tileIdCounter++,
+        id: Math.random().toString(36).substr(2, 9),
         value,
         position: { row, col }
       };
@@ -73,9 +70,6 @@ export class GameManager {
     // Build traversal order
     const traversals = this.buildTraversals(vector);
     
-    // Save current tile positions
-    const oldTiles = new Map(this.tiles);
-    
     // Clear merged flags
     this.tiles.forEach(tile => {
       delete tile.mergedFrom;
@@ -94,7 +88,7 @@ export class GameManager {
           // Merge tiles if possible
           if (next && next.value === tile.value && !next.mergedFrom) {
             const merged: Tile = {
-              id: this.tileIdCounter++,
+              id: Math.random().toString(36).substr(2, 9),
               value: tile.value * 2,
               position: positions.next,
               mergedFrom: [tile, next]

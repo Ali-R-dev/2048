@@ -1,50 +1,110 @@
-# React + TypeScript + Vite
+# 2048 Game - React + TypeScript Version
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern implementation of the classic 2048 puzzle game, built with React, TypeScript, and modern web technologies.
 
-Currently, two official plugins are available:
+![2048 Game Screenshot](screenshot.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎮 Play Now
 
-## Expanding the ESLint configuration
+Visit [2048 Game](https://your-deployment-url.netlify.app) to play the game online!
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## ✨ Features
 
-- Configure the top-level `parserOptions` property like this:
+- 🎯 Classic 2048 gameplay mechanics
+- 📱 Responsive design for all devices
+- 🎨 Smooth animations and transitions
+- 🔄 Touch and keyboard controls
+- 💾 Score tracking
+- 🌈 Modern UI with Styled Components
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🛠️ Tech Stack
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Frontend Framework:** React
+- **Language:** TypeScript
+- **State Management:** Redux Toolkit
+- **Styling:** Styled Components
+- **Animations:** Framer Motion
+- **Build Tool:** Vite
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+## 🚀 Getting Started
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/2048.git
+   cd 2048
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open [http://localhost:5173](http://localhost:5173) in your browser
+
+## 🎯 How to Play
+
+1. Use arrow keys (↑ ↓ ← →) or swipe gestures to move tiles
+2. Tiles with the same number merge when they collide
+3. Create a tile with the number 2048 to win!
+4. Game over when no more moves are possible
+
+## 🔧 Controls
+
+- **Desktop:** Arrow keys
+- **Mobile:** Swipe gestures
+- **New Game:** Click/tap "New Game" button
+
+## 📱 Mobile Support
+
+The game is fully responsive and supports:
+- Touch gestures for tile movement
+- Mobile-optimized layout
+- Smooth animations on mobile devices
+
+## 🎨 Customization
+
+The game uses a theme system for easy customization:
+- Color schemes
+- Tile sizes
+- Animation parameters
+- Responsive breakpoints
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Original 2048 game by Gabriele Cirulli
+- React and TypeScript communities
+- All contributors and users
+
+## 🔗 Links
+
+- [Original 2048 Game](https://play2048.co/)
+- [React Documentation](https://reactjs.org/)
+- [TypeScript Documentation](https://www.typescriptlang.org/)
+
+---
+
+Made with ❤️ by [Your Name]

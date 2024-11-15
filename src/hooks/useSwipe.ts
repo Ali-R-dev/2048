@@ -1,4 +1,4 @@
-import { useState, TouchEvent, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 type Direction = 'up' | 'down' | 'left' | 'right';
 
@@ -6,8 +6,8 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
-    const handleTouchStart = (e: TouchEvent) => {
-      const touch = e.touches[0];
+    const handleTouchStart = (e: React.TouchEvent['touches']) => {
+      const touch = e[0];
       setTouchStart({
         x: touch.clientX,
         y: touch.clientY,
@@ -18,13 +18,13 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
       e.preventDefault();
     };
 
-    const handleTouchEnd = (e: TouchEvent) => {
+    const handleTouchEnd = (e: React.TouchEvent['changedTouches']) => {
       if (!touchStart) return;
 
-      const touch = e.changedTouches[0];
+      const touch = e[0];
       const deltaX = touch.clientX - touchStart.x;
       const deltaY = touch.clientY - touchStart.y;
-      const minSwipeDistance = 30; // Reduced minimum swipe distance for better response
+      const minSwipeDistance = 30;
 
       if (Math.abs(deltaX) < minSwipeDistance && Math.abs(deltaY) < minSwipeDistance) {
         return;
@@ -42,14 +42,14 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
     const board = document.getElementById('board-container');
     if (!board) return;
 
-    board.addEventListener('touchstart', handleTouchStart, { passive: true });
+    board.addEventListener('touchstart', (e) => handleTouchStart(e.touches));
     board.addEventListener('touchmove', handleTouchMove, { passive: false });
-    board.addEventListener('touchend', handleTouchEnd, { passive: true });
+    board.addEventListener('touchend', (e) => handleTouchEnd(e.changedTouches));
 
     return () => {
-      board.removeEventListener('touchstart', handleTouchStart);
+      board.removeEventListener('touchstart', (e) => handleTouchStart(e.touches));
       board.removeEventListener('touchmove', handleTouchMove);
-      board.removeEventListener('touchend', handleTouchEnd);
+      board.removeEventListener('touchend', (e) => handleTouchEnd(e.changedTouches));
     };
   }, [onSwipe, touchStart]);
 
