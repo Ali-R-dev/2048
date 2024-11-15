@@ -2,6 +2,10 @@
 
 A modern implementation of the classic 2048 puzzle game with smooth animations and mobile support.
 
+🎮 [Play Live Demo](https://ar-2048-game.netlify.app)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3094e627-3cbb-44f5-8aee-ab0ce9bac81b/deploy-status)](https://app.netlify.com/sites/ar-2048-game/deploys)
+
 ## Game Preview
 
 <div align="center">
@@ -44,36 +48,27 @@ A modern implementation of the classic 2048 puzzle game with smooth animations a
 - Swipe Left: Move tiles left
 - Swipe Right: Move tiles right
 
-## Technical Details
+## Play Online
+
+Visit [ar-2048-game.netlify.app](https://ar-2048-game.netlify.app) to play the game online!
+
+## Development
 
 ### Technologies Used
 
 - HTML5
 - CSS3
 - JavaScript (ES6+)
+- Netlify for deployment
 
-### Key Components
-
-- `index.html`: Main game structure
-- `styles.css`: Game styling and animations
-- `game.js`: Game logic and interactions
-
-### Features Implementation
-
-- CSS Grid for game board layout
-- CSS Transforms for tile animations
-- Touch events for mobile support
-- Responsive design with media queries
-- Modern JavaScript class structure
-
-## Installation
+### Local Development
 
 1. Clone the repository:
    ```bash
    git clone https://github.com/ali-r-dev/2048.git
    ```
 
-2. Open `index.html` in your browser to play
+2. Open `index.html` in your browser to play locally
 
 ## Future Enhancements
 
@@ -103,9 +98,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Original 2048 game by Gabriele Cirulli
 - Inspiration from various 2048 implementations
 - Community feedback and contributions
+- Hosted on [Netlify](https://www.netlify.com/)
 
 ## Contact
 
 Ali Raza - [GitHub](https://github.com/ali-r-dev)
 
-Project Link: [https://github.com/ali-r-dev/2048](https://github.com/ali-r-dev/2048)
+Project Links:
+- GitHub: [https://github.com/ali-r-dev/2048](https://github.com/ali-r-dev/2048)
+- Live Demo: [https://ar-2048-game.netlify.app](https://ar-2048-game.netlify.app)
