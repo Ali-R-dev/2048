@@ -4,10 +4,11 @@ import { store } from './store/store';
 import { theme } from './styles/theme';
 import { Board } from './components/Board/Board';
 import { Score } from './components/Score/Score';
+import { Instructions } from './components/Instructions/Instructions';
 import { GlobalStyle } from './styles/GlobalStyle';
 import styled from 'styled-components';
 
-const AppWrapper = styled.div`
+const Container = styled.div`
   min-height: 100vh;
   width: 100%;
   display: flex;
@@ -28,11 +29,9 @@ const GameContainer = styled.div`
   gap: 20px;
 `;
 
-const Title = styled.h1`
-  color: ${({ theme }) => theme.colors.darkText};
-  font-size: clamp(40px, 10vw, 80px);
-  margin: 0;
-  text-align: center;
+const Header = styled.header`
+  width: 100%;
+  margin-bottom: 2rem;
 `;
 
 function App() {
@@ -40,13 +39,15 @@ function App() {
     <Provider store={store}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <AppWrapper>
+        <Container>
           <GameContainer>
-            <Title>2048</Title>
-            <Score />
+            <Header>
+              <Score />
+            </Header>
             <Board />
+            <Instructions />
           </GameContainer>
-        </AppWrapper>
+        </Container>
       </ThemeProvider>
     </Provider>
   );
