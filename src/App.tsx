@@ -3,35 +3,25 @@ import { ThemeProvider } from 'styled-components';
 import { store } from './store/store';
 import { theme } from './styles/theme';
 import { Board } from './components/Board/Board';
-import { Score } from './components/Score/Score';
+import { Header } from './components/Header/Header';
+import { GameStatus } from './components/GameStatus/GameStatus';
 import { Instructions } from './components/Instructions/Instructions';
 import { GlobalStyle } from './styles/GlobalStyle';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  min-height: 100vh;
-  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: ${({ theme }) => theme.colors.background};
-  padding: 20px;
-  box-sizing: border-box;
+  padding: 1rem;
+  min-height: 100vh;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 const GameContainer = styled.div`
   width: 100%;
   max-width: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-`;
-
-const Header = styled.header`
-  width: 100%;
-  margin-bottom: 2rem;
+  margin: 0 auto;
 `;
 
 function App() {
@@ -41,11 +31,10 @@ function App() {
         <GlobalStyle />
         <Container>
           <GameContainer>
-            <Header>
-              <Score />
-            </Header>
+            <Header />
             <Board />
             <Instructions />
+            <GameStatus />
           </GameContainer>
         </Container>
       </ThemeProvider>
