@@ -4,16 +4,33 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const InstructionsContainer = styled(motion.div)`
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
   background: rgba(238, 228, 218, 0.95);
-  padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 90%;
-  width: 400px;
   z-index: 1000;
+  width: min(400px, 90%);
+  height: fit-content;
+  max-height: min(90%, 600px);
+  padding: min(24px, 5vw);
+  overflow-y: auto;
+
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Ensure content is readable on smaller screens */
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    width: 90%;
+    font-size: 0.9rem;
+    padding: 20px;
+  }
 `;
 
 const Overlay = styled(motion.div)`
@@ -29,64 +46,79 @@ const Overlay = styled(motion.div)`
 const Title = styled.h2`
   color: #776e65;
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 1.5rem;
+  margin: 0 0 20px 0;
+  font-size: min(24px, 6vw);
+  padding-right: 24px;
 `;
 
 const InstructionItem = styled.div`
   display: flex;
   align-items: center;
-  margin: 1rem 0;
+  padding: 8px 0;
   color: #776e65;
-  gap: 1rem;
+  gap: 12px;
 `;
 
 const Icon = styled.div`
-  font-size: 1.5rem;
-  width: 2rem;
+  font-size: min(24px, 6vw);
+  min-width: 40px;
   text-align: center;
 `;
 
 const CloseButton = styled.button`
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: min(20px, 4vw);
+  right: min(20px, 4vw);
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 24px;
   cursor: pointer;
   color: #776e65;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: all 0.2s;
   
   &:hover {
-    color: #000;
+    background: rgba(0, 0, 0, 0.1);
   }
 `;
 
 const HelpButton = styled.button`
   position: fixed;
-  bottom: 1rem;
-  right: 1rem;
+  bottom: min(20px, 4vw);
+  right: min(20px, 4vw);
   background: #8f7a66;
   border: none;
   border-radius: 50%;
-  width: 3rem;
-  height: 3rem;
+  width: min(48px, 12vw);
+  height: min(48px, 12vw);
   color: white;
-  font-size: 1.5rem;
+  font-size: min(24px, 6vw);
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 998;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s;
   
   &:hover {
     background: #9f8a76;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 `;
 
 export const Instructions = () => {
-  const [isOpen, setIsOpen] = useState(true); // Show on first load
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <>
@@ -100,9 +132,9 @@ export const Instructions = () => {
               onClick={() => setIsOpen(false)}
             />
             <InstructionsContainer
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
             >
               <CloseButton onClick={() => setIsOpen(false)}>×</CloseButton>
               <Title>How to Play 2048</Title>
