@@ -1,14 +1,17 @@
-# 2048 Game - React + TypeScript Version
+# 2048 Game
 
 A modern implementation of the classic 2048 puzzle game, built with React, TypeScript, and modern web technologies.
 
-![2048 Game Screenshot](screenshot.png)
+## Screenshots
 
-## 🎮 Play Now
+![Gameplay Screenshot 1](/gameplay.png)
+![Gameplay Screenshot 2](/gameplay1.png)
 
-Visit [2048 Game](https://your-deployment-url.netlify.app) to play the game online!
+## Play Now
 
-## ✨ Features
+Visit [2048 Game](https://2048.araza.me) to play online!
+
+## Features
 
 - 🎯 Classic 2048 gameplay mechanics
 - 📱 Responsive design for all devices
@@ -17,7 +20,7 @@ Visit [2048 Game](https://your-deployment-url.netlify.app) to play the game onli
 - 💾 Score tracking
 - 🌈 Modern UI with Styled Components
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **Frontend Framework:** React
 - **Language:** TypeScript
