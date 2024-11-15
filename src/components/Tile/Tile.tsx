@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TileContainer } from './Tile.styles';
 import { Tile as TileType } from '../../utils/gameLogic';
+import { MOVEMENT_SPRING, MERGE_SPRING, NEW_TILE_SPRING } from '../../constants/animation';
 
 interface TileProps {
   tile: TileType;
@@ -36,11 +37,9 @@ export const Tile: React.FC<TileProps> = ({ tile }) => {
         scale: 1
       }}
       transition={{
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        y: { type: "spring", stiffness: 300, damping: 30 },
-        scale: mergedFrom 
-          ? { type: "spring", stiffness: 200, damping: 20 }
-          : { type: "spring", stiffness: 500, damping: 30 }
+        x: MOVEMENT_SPRING,
+        y: MOVEMENT_SPRING,
+        scale: mergedFrom ? MERGE_SPRING : NEW_TILE_SPRING
       }}
     >
       {value}

@@ -8,6 +8,7 @@ interface GameState {
   isGameOver: boolean;
   hasWon: boolean;
   bestScore: number;
+  pendingMerges: { pos: Position, value: number, tiles: Tile[] }[];
 }
 
 const loadBestScore = (): number => {
@@ -21,7 +22,8 @@ const initialState: GameState = {
   tiles: [],
   isGameOver: false,
   hasWon: false,
-  bestScore: loadBestScore()
+  bestScore: loadBestScore(),
+  pendingMerges: []
 };
 
 const getVector = (direction: 'up' | 'down' | 'left' | 'right'): Position => {
@@ -56,6 +58,7 @@ export const gameSlice = createSlice({
       state.tiles = [];
       state.isGameOver = false;
       state.hasWon = false;
+      state.pendingMerges = [];
       addRandomTile(state);
       addRandomTile(state);
     },
@@ -66,12 +69,30 @@ export const gameSlice = createSlice({
         addRandomTile(state);
         checkGameStatus(state);
         
-        // Update best score
         if (state.score > state.bestScore) {
           state.bestScore = state.score;
           localStorage.setItem('bestScore', state.score.toString());
         }
       }
+    },
+
+    processMerges: (state) => {
+      state.pendingMerges.forEach(({ pos, value, tiles }) => {
+        // Remove old tiles
+        state.tiles = state.tiles.filter(t => 
+          !tiles.some(mergedTile => mergedTile.id === t.id) &&
+          !(t.position.row === pos.row && t.position.col === pos.col)
+        );
+
+        // Add merged tile
+        state.tiles.push({
+          id: Date.now() + Math.random(),
+          value,
+          position: pos,
+          mergedFrom: tiles
+        });
+      });
+      state.pendingMerges = [];
     }
   }
 });
@@ -104,8 +125,9 @@ function moveTilesInDirection(state: GameState, direction: 'up' | 'down' | 'left
   const vector = getVector(direction);
   const traversals = buildTraversals(vector);
 
-  // Clear merged flags
+  // Clear merged flags and pending merges
   state.tiles = state.tiles.map(tile => ({ ...tile, mergedFrom: undefined }));
+  state.pendingMerges = [];
 
   traversals.row.forEach(row => {
     traversals.col.forEach(col => {
@@ -121,22 +143,19 @@ function moveTilesInDirection(state: GameState, direction: 'up' | 'down' | 'left
         );
 
         if (merged) {
-          // Merge tiles
           const mergedValue = state.grid[row][col] * 2;
           state.grid[row][col] = 0;
           state.grid[newRow][newCol] = mergedValue;
           state.score += mergedValue;
 
-          // Remove old tiles and create merged tile
-          state.tiles = state.tiles.filter(t => 
-            t.id !== currentTile.id && 
-            !(t.position.row === newRow && t.position.col === newCol)
-          );
-          state.tiles.push({
-            id: Date.now() + Math.random(),
+          // Update current tile position for animation
+          currentTile.position = { row: newRow, col: newCol };
+          
+          // Store merge info
+          state.pendingMerges.push({
+            pos: { row: newRow, col: newCol },
             value: mergedValue,
-            position: { row: newRow, col: newCol },
-            mergedFrom: [currentTile]
+            tiles: [currentTile]
           });
 
           moved = true;
@@ -247,5 +266,5 @@ function hasAvailableMoves(state: GameState): boolean {
   return false;
 }
 
-export const { startGame, moveTiles } = gameSlice.actions;
+export const { startGame, moveTiles, processMerges } = gameSlice.actions;
 export default gameSlice.reducer;

@@ -3,16 +3,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BoardContainer, Grid, Cell } from './Board.styles';
 import { Tile } from '../Tile/Tile';
 import { RootState } from '../../store/store';
-import { startGame, moveTiles } from '../../store/gameSlice';
+import { startGame, moveTiles, processMerges } from '../../store/gameSlice';
 import { useSwipe } from '../../hooks/useSwipe';
+import { ANIMATION_DURATION } from '../../constants/animation';
 
 export const Board: React.FC = () => {
   const dispatch = useDispatch();
   const { tiles } = useSelector((state: RootState) => state.game);
   
-  // Initialize swipe handling
-  useSwipe((direction) => {
+  const handleMove = (direction: 'up' | 'down' | 'left' | 'right') => {
     dispatch(moveTiles(direction));
+    // Process merges after movement animation completes
+    setTimeout(() => {
+      dispatch(processMerges());
+    }, ANIMATION_DURATION * 1000); // Convert to milliseconds
+  };
+
+  const swipeHandlers = useSwipe((direction) => {
+    handleMove(direction);
   });
 
   useEffect(() => {
@@ -22,7 +30,7 @@ export const Board: React.FC = () => {
       if (event.key.startsWith('Arrow')) {
         event.preventDefault();
         const direction = event.key.replace('Arrow', '').toLowerCase() as 'up' | 'down' | 'left' | 'right';
-        dispatch(moveTiles(direction));
+        handleMove(direction);
       }
     };
 
@@ -31,7 +39,7 @@ export const Board: React.FC = () => {
   }, [dispatch]);
 
   return (
-    <BoardContainer>
+    <BoardContainer {...swipeHandlers}>
       <Grid id="grid">
         {Array(16).fill(null).map((_, index) => (
           <Cell key={index} />
