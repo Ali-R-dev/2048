@@ -4,8 +4,8 @@ A modern React implementation of the classic 2048 puzzle game. This is a reimagi
 
 ## Screenshots
 
-![Gameplay Screenshot 1](./assets/gameplay.png)
-![Gameplay Screenshot 2](./assets/gameplay1.png)
+![Gameplay Screenshot 1](./assets/gameplay.png?v=2)
+![Gameplay Screenshot 2](./assets/gameplay1.png?v=2)
 
 ## Play Now
 
