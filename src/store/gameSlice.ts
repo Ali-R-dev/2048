@@ -242,13 +242,15 @@ function hasAvailableMoves(state: GameState): boolean {
     }
   }
 
-  // Check for possible merges
+  // Check for possible merges in all directions
   for (let row = 0; row < 4; row++) {
     for (let col = 0; col < 4; col++) {
       const value = state.grid[row][col];
       const directions: Position[] = [
         { row: 0, col: 1 },  // right
-        { row: 1, col: 0 }   // down
+        { row: 1, col: 0 },  // down
+        { row: 0, col: -1 }, // left
+        { row: -1, col: 0 }  // up
       ];
 
       for (const dir of directions) {
