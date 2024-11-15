@@ -7,6 +7,11 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
 
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
+      // Don't handle touch if it's on a button or interactive element
+      if ((e.target as HTMLElement).tagName.toLowerCase() === 'button') {
+        return;
+      }
+      
       const touch = e.touches[0];
       if (touch) {
         setTouchStart({
@@ -17,7 +22,10 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
     };
 
     const handleTouchMove = (e: TouchEvent) => {
-      e.preventDefault();
+      // Only prevent default if we're handling the touch
+      if (touchStart) {
+        e.preventDefault();
+      }
     };
 
     const handleTouchEnd = (e: TouchEvent) => {
@@ -43,17 +51,15 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
       setTouchStart(null);
     };
 
-    const board = document.getElementById('board-container');
-    if (!board) return;
-
-    board.addEventListener('touchstart', handleTouchStart);
-    board.addEventListener('touchmove', handleTouchMove, { passive: false });
-    board.addEventListener('touchend', handleTouchEnd);
+    // Attach to document body instead of board
+    document.body.addEventListener('touchstart', handleTouchStart);
+    document.body.addEventListener('touchmove', handleTouchMove, { passive: false });
+    document.body.addEventListener('touchend', handleTouchEnd);
 
     return () => {
-      board.removeEventListener('touchstart', handleTouchStart);
-      board.removeEventListener('touchmove', handleTouchMove);
-      board.removeEventListener('touchend', handleTouchEnd);
+      document.body.removeEventListener('touchstart', handleTouchStart);
+      document.body.removeEventListener('touchmove', handleTouchMove);
+      document.body.removeEventListener('touchend', handleTouchEnd);
     };
   }, [onSwipe, touchStart]);
 
