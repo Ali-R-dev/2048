@@ -6,22 +6,26 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
   const [touchStart, setTouchStart] = useState<{ x: number; y: number } | null>(null);
 
   useEffect(() => {
-    const handleTouchStart = (e: React.TouchEvent['touches']) => {
-      const touch = e[0];
-      setTouchStart({
-        x: touch.clientX,
-        y: touch.clientY,
-      });
+    const handleTouchStart = (e: TouchEvent) => {
+      const touch = e.touches[0];
+      if (touch) {
+        setTouchStart({
+          x: touch.clientX,
+          y: touch.clientY,
+        });
+      }
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       e.preventDefault();
     };
 
-    const handleTouchEnd = (e: React.TouchEvent['changedTouches']) => {
+    const handleTouchEnd = (e: TouchEvent) => {
       if (!touchStart) return;
 
-      const touch = e[0];
+      const touch = e.changedTouches[0];
+      if (!touch) return;
+
       const deltaX = touch.clientX - touchStart.x;
       const deltaY = touch.clientY - touchStart.y;
       const minSwipeDistance = 30;
@@ -42,14 +46,14 @@ export const useSwipe = (onSwipe: (direction: Direction) => void) => {
     const board = document.getElementById('board-container');
     if (!board) return;
 
-    board.addEventListener('touchstart', (e) => handleTouchStart(e.touches));
+    board.addEventListener('touchstart', handleTouchStart);
     board.addEventListener('touchmove', handleTouchMove, { passive: false });
-    board.addEventListener('touchend', (e) => handleTouchEnd(e.changedTouches));
+    board.addEventListener('touchend', handleTouchEnd);
 
     return () => {
-      board.removeEventListener('touchstart', (e) => handleTouchStart(e.touches));
+      board.removeEventListener('touchstart', handleTouchStart);
       board.removeEventListener('touchmove', handleTouchMove);
-      board.removeEventListener('touchend', (e) => handleTouchEnd(e.changedTouches));
+      board.removeEventListener('touchend', handleTouchEnd);
     };
   }, [onSwipe, touchStart]);
 

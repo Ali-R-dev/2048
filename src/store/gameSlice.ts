@@ -86,7 +86,7 @@ export const gameSlice = createSlice({
 
         // Add merged tile
         state.tiles.push({
-          id: Date.now() + Math.random(),
+          id: (Date.now() + Math.random()).toString(),
           value,
           position: pos,
           mergedFrom: tiles
@@ -113,7 +113,7 @@ function addRandomTile(state: GameState) {
     state.grid[row][col] = value;
     
     state.tiles.push({
-      id: Date.now() + Math.random(),
+      id: (Date.now() + Math.random()).toString(),
       value,
       position: { row, col }
     });
