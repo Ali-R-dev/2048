@@ -1,6 +1,6 @@
 # 2048 Game
 
-A modern implementation of the classic 2048 puzzle game, built with React, TypeScript, and modern web technologies.
+A modern React implementation of the classic 2048 puzzle game. This is a reimagined version of the original game created by Gabriele Cirulli, built with modern web technologies.
 
 ## Screenshots
 
@@ -87,6 +87,10 @@ The game uses a theme system for easy customization:
 - Tile sizes
 - Animation parameters
 - Responsive breakpoints
+
+## Credits
+
+This game is a reimplementation of [2048 by Gabriele Cirulli](https://github.com/gabrielecirulli/2048). The original game is also open source and available under the MIT License.
 
 ## 🤝 Contributing
 
